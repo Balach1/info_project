@@ -1,5 +1,5 @@
 class Person 
-  require 'date'
+require 'date'
 attr_accessor :dob, :first_name, :surname, :fullname, :phone_numbers, :relationship
 attr_reader :emails, :phone_numbers
   
@@ -10,9 +10,6 @@ attr_reader :emails, :phone_numbers
     @fullname = @first_name + ' ' + @surname
     @emails = []  
     @phone_numbers = []
-  end
-  def fullnum
-    
   end
   def add_email(email)
     @emails.push(email)
@@ -26,7 +23,11 @@ attr_reader :emails, :phone_numbers
     index = @emails.index(email)
     @emails.slice!(index)
   end
+  def remove_num(phone_number)
+    index =@phone_numbers.index(phone_number)
+    @phone_numbers.slice(index)
 
+  end
   def to_st
       "#{@fullname} was born on #{@dob.strftime('%Y-%m-%d')}. Their email addresses are: #{@emails.to_s}.Their phone numbers are #{@phone_numbers.to_s}"
   end
@@ -55,11 +56,17 @@ attr_reader :emails, :phone_numbers
 end
 
 class FamilyMember < Person
-  attr_accessor :relationship
+  attr_reader :relationships
   
-  def initialiaze(first_name, surname, dob = nil, relationship = nil)
-    @relationship = relationship
+  def initialiaze(first_name, surname, dob, relationship)
+    @relationships.push(relationship)
     super(first_name, surname, dob)
+  end
+
+ def add_relation(relationship)
+    puts"#{relationship}"
+    relationship
+    super(relationship)
   end
 
   def add_email(email)
@@ -73,7 +80,7 @@ def add_phone(phone)
   end
 end
 
-class AddressBook < Person
+class AddressBook 
   attr_accessor :entries, :yaml
   require 'yaml'
   def initialize 
@@ -87,17 +94,6 @@ class AddressBook < Person
       raise "You must provide a valid Person object"
     end
   end
-
-   def add_email(email)
-    puts"#{email}"
-    super(email)
-  end
-
-def add_phone(phone)
-    puts"#{phone}"
-    super(phone_number)
-  end
-
 
   def list
     puts"Address Book"
